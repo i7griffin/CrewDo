@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
+
+console.log("ENV CHECK:", process.env.MONGO_URI);
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
@@ -77,7 +79,7 @@ app.use((err, req, res, next) => {
 scheduleDailyStreakReset();
 
 // ─── Start Server ──────────────────────────────────────────────
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => {
   logger.info(`🚀 CrewDo server running on port ${PORT} [${process.env.NODE_ENV}]`);
 });

@@ -1,7 +1,9 @@
 const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
-const User = require('./models/user');
-const logger = require('./utils/logger');
+
+// ✅ FIXED PATHS
+const User = require('../models/user');
+const logger = require('../utils/logger');
 
 let io;
 
@@ -17,11 +19,18 @@ const initSocket = (server) => {
   // ─── Auth Middleware ─────────────────────────────────────────
   io.use(async (socket, next) => {
     try {
-      const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization?.split(' ')[1];
+      const token =
+        socket.handshake.auth?.token ||
+        socket.handshake.headers?.authorization?.split(' ')[1];
+
       if (!token) return next(new Error('Authentication required'));
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.id).select('username clan clanRole');
+
+      const user = await User.findById(decoded.id).select(
+        'username clan clanRole'
+      );
+
       if (!user) return next(new Error('User not found'));
 
       socket.user = user;
@@ -34,6 +43,7 @@ const initSocket = (server) => {
   // ─── Connection Handler ──────────────────────────────────────
   io.on('connection', (socket) => {
     const { user } = socket;
+
     logger.info(`🔌 Socket connected: ${user.username} (${socket.id})`);
 
     // Join personal notification room

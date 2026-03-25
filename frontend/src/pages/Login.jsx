@@ -1,46 +1,67 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { loginUser, registerUser } from '../services/api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authAPI } from "../services/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState('login'); // 'login' | 'signup'
-  const [form, setForm] = useState({ username: '', password: '', email: '' });
+  const [mode, setMode] = useState("login"); // 'login' | 'signup'
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async () => {
-    setError('');
+    setError("");
+
     if (!form.username || !form.password) {
-      setError('Please fill in all fields.');
+      setError("Please fill in all fields.");
       return;
     }
+
     setLoading(true);
+
     try {
       const res =
-        mode === 'login'
-          ? await loginUser({ username: form.username, password: form.password })
-          : await registerUser(form);
+        mode === "login"
+          ? await authAPI.login({
+              username: form.username,
+              password: form.password,
+            })
+          : await authAPI.register(form);
 
-      const { token, user } = res.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate('/dashboard');
+      // 🔥 NOTE: updated API returns data directly
+      const { token, user } = res;
+
+      if (token) {
+        localStorage.setItem("crewdo_token", token);
+      }
+
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Try again.');
+      setError(
+        err.response?.data?.message || "Something went wrong. Try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const handleKeyDown = (e) => { if (e.key === 'Enter') handleSubmit(); };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSubmit();
+  };
 
   return (
     <div className="login-root">
-      {/* Animated background grid */}
       <div className="login-grid-bg" />
       <div className="login-glow" />
 
@@ -50,7 +71,7 @@ export default function LoginPage() {
         </div>
 
         <div className="login-fields">
-          {mode === 'signup' && (
+          {mode === "signup" && (
             <div className="field-group">
               <label>Email</label>
               <input
@@ -102,17 +123,39 @@ export default function LoginPage() {
           onClick={handleSubmit}
           disabled={loading}
         >
-          {loading ? <span className="spinner" /> : mode === 'login' ? 'LOGIN' : 'SIGN UP'}
+          {loading ? (
+            <span className="spinner" />
+          ) : mode === "login" ? (
+            "LOGIN"
+          ) : (
+            "SIGN UP"
+          )}
         </button>
 
         <p className="login-switch">
-          {mode === 'login' ? (
-            <>don't have an account?{' '}
-              <span onClick={() => { setMode('signup'); setError(''); }}>[sign up]</span>
+          {mode === "login" ? (
+            <>
+              don't have an account?{" "}
+              <span
+                onClick={() => {
+                  setMode("signup");
+                  setError("");
+                }}
+              >
+                [sign up]
+              </span>
             </>
           ) : (
-            <>already have an account?{' '}
-              <span onClick={() => { setMode('login'); setError(''); }}>[log in]</span>
+            <>
+              already have an account?{" "}
+              <span
+                onClick={() => {
+                  setMode("login");
+                  setError("");
+                }}
+              >
+                [log in]
+              </span>
             </>
           )}
         </p>

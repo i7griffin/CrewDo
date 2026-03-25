@@ -1,61 +1,79 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getUserClans, joinClan, createClan } from '../services/api';
-import GroupCard from '../components/GroupCard';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { clanAPI } from "../services/api";
+import GroupCard from "../components/GroupCard";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [clans, setClans] = useState([]);
-  const [teamCode, setTeamCode] = useState('');
+  const [teamCode, setTeamCode] = useState("");
   const [showCreate, setShowCreate] = useState(false);
-  const [newClanName, setNewClanName] = useState('');
+  const [newClanName, setNewClanName] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
+  // 🔥 Fetch clans
   const fetchClans = async () => {
     try {
-      const res = await getUserClans();
-      setClans(res.data?.clans || res.data || []);
-    } catch {
-      setError('Failed to load clans.');
+      setLoading(true);
+      const data = await clanAPI.getMyClans();
+      setClans(data?.clans || data || []);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load clans.");
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => { fetchClans(); }, []);
+  useEffect(() => {
+    fetchClans();
+  }, []);
 
+  // 🔥 Join clan
   const handleJoin = async () => {
     if (!teamCode.trim()) return;
-    setError('');
+    setError("");
+
     try {
-      await joinClan(teamCode.trim().toUpperCase());
-      setTeamCode('');
+      await clanAPI.joinClan(teamCode.trim().toUpperCase());
+      setTeamCode("");
       fetchClans();
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid team code.');
+      setError(err.response?.data?.message || "Invalid team code.");
     }
   };
 
+  // 🔥 Create clan
   const handleCreate = async () => {
     if (!newClanName.trim()) return;
-    setError('');
+    setError("");
+
     try {
-      const res = await createClan({ name: newClanName.trim() });
+      const data = await clanAPI.createClan({
+        name: newClanName.trim(),
+      });
+
       setShowCreate(false);
-      setNewClanName('');
-      navigate(`/clan/${res.data.clan?._id || res.data._id}`);
+      setNewClanName("");
+
+      const clanId = data?.clan?._id || data?._id;
+      if (clanId) {
+        navigate(`/clan/${clanId}`);
+      } else {
+        fetchClans();
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Could not create clan.');
+      setError(err.response?.data?.message || "Could not create clan.");
     }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/');
+    localStorage.removeItem("crewdo_token");
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   return (
@@ -67,8 +85,10 @@ export default function DashboardPage() {
           <button className="nav-icon-btn" title="Settings">⚙</button>
           <button className="nav-icon-btn" title="Help">?</button>
           <div className="nav-user" onClick={handleLogout} title="Logout">
-            <div className="nav-avatar">{user.username?.[0]?.toUpperCase() || 'U'}</div>
-            <span>{user.username || 'User'}</span>
+            <div className="nav-avatar">
+              {user.username?.[0]?.toUpperCase() || "U"}
+            </div>
+            <span>{user.username || "User"}</span>
           </div>
         </div>
       </nav>
@@ -79,18 +99,23 @@ export default function DashboardPage() {
         <div className="dash-join-row">
           <input
             className="dash-code-input"
-            placeholder=""
             value={teamCode}
             onChange={(e) => setTeamCode(e.target.value.toUpperCase())}
-            onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
+            onKeyDown={(e) => e.key === "Enter" && handleJoin()}
             maxLength={8}
           />
         </div>
-        <button className="dash-btn-primary" onClick={handleJoin}>JOIN GROUP</button>
+
+        <button className="dash-btn-primary" onClick={handleJoin}>
+          JOIN GROUP
+        </button>
 
         <div className="dash-divider" />
 
-        <button className="dash-btn-primary" onClick={() => setShowCreate(!showCreate)}>
+        <button
+          className="dash-btn-primary"
+          onClick={() => setShowCreate(!showCreate)}
+        >
           CREATE GROUP
         </button>
 
@@ -100,10 +125,12 @@ export default function DashboardPage() {
               placeholder="Group name..."
               value={newClanName}
               onChange={(e) => setNewClanName(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+              onKeyDown={(e) => e.key === "Enter" && handleCreate()}
               className="dash-code-input"
             />
-            <button className="dash-btn-secondary" onClick={handleCreate}>Create</button>
+            <button className="dash-btn-secondary" onClick={handleCreate}>
+              Create
+            </button>
           </div>
         )}
 
@@ -112,10 +139,13 @@ export default function DashboardPage() {
         {/* Groups */}
         <div className="dash-groups-box">
           <p className="dash-section-label">YOUR GROUPS</p>
+
           {loading ? (
             <div className="dash-loading">Loading...</div>
           ) : clans.length === 0 ? (
-            <p className="dash-empty">No groups yet. Join or create one!</p>
+            <p className="dash-empty">
+              No groups yet. Join or create one!
+            </p>
           ) : (
             <div className="dash-groups-list">
               {clans.map((clan, i) => (
