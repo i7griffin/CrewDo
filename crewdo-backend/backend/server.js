@@ -23,7 +23,7 @@ const app = express();
 const server = http.createServer(app);
 
 // ─── Connect DB ────────────────────────────────────────────────
-connectDB();
+// connectDB(); // Bypassed MongoDB connection at user's request
 
 // ─── Init WebSocket ────────────────────────────────────────────
 initSocket(server);

@@ -4,25 +4,30 @@ import api from '../services/api'
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(() => localStorage.getItem('crewdo_token'))
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState({
+    _id: '60c72b2f9b1d8b001c8e4b52',
+    id: '60c72b2f9b1d8b001c8e4b52',
+    username: 'Guest User',
+    email: 'guest@example.com',
+    clan: '60c72b2f9b1d8b001c8e4b53'
+  })
+  const [token, setToken] = useState('mocked_access_token')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-      fetchMe()
-    } else {
-      setLoading(false)
     }
   }, [token])
 
   const fetchMe = async () => {
     try {
       const res = await api.get('/auth/me')
-      setUser(res.data.data)
+      if (res.data?.data?.user) {
+        setUser(res.data.data.user)
+      }
     } catch {
-      logout()
+      // Ignored
     } finally {
       setLoading(false)
     }
@@ -39,8 +44,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('crewdo_token')
     localStorage.removeItem('crewdo_refresh')
     delete api.defaults.headers.common['Authorization']
-    setToken(null)
-    setUser(null)
   }
 
   return (

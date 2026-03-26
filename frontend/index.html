@@ -1,15 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CrewDo — Habit Together</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrewDo</title>
+<style>
+body{margin:0;font-family:"Trebuchet MS","Segoe UI",sans-serif;background:#071018;color:#eef7f1}*{box-sizing:border-box}.page{display:none;min-height:100vh}.page.active{display:block}.auth-page,.groups-page{background:linear-gradient(180deg,#183925 0%,#10281a 100%)}.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}.auth-card{width:min(440px,100%);padding:28px;border-radius:28px;background:rgba(12,20,15,.6);border:1px solid rgba(120,255,138,.3);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px rgba(120,255,138,0.06);backdrop-filter:blur(16px);}.brand-title{margin:0 0 12px;text-align:center;font-size:4rem}.brand-subtitle{margin:0 0 24px;text-align:center;text-transform:uppercase;letter-spacing:.16em;color:#cfe9d4}.auth-form,.group-create-form{display:flex;flex-direction:column;gap:14px}.auth-form input,.group-create-form input,.join-box input,.settings-menu input,.settings-menu select,.chat-input input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(120,255,138,.22);background:rgba(28,31,34,.88);color:#fff}.primary-btn,.secondary-btn,.ghost-btn,.icon-btn{border:none;cursor:pointer;font:inherit}.primary-btn,.secondary-btn{padding:14px 16px;border-radius:12px;font-weight:900;text-transform:uppercase}.primary-btn{background:linear-gradient(180deg,#7fff84,#4cb45a);color:#071007;box-shadow:0 0 12px rgba(120,255,138,0.2)}.secondary-btn{background:linear-gradient(180deg,#6cff61,#48ef3d);color:#071007}.ghost-btn{background:transparent;color:#8de389}.auth-switch{text-align:center;margin-top:18px}.groups-wrap,.app-shell{max-width:1200px;margin:0 auto;padding:22px 18px 32px}.groups-top,.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px}.topbar{padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.08)}.brand-logo{height:42px}.topbar-actions{display:flex;align-items:center;gap:12px;position:relative}.icon-btn{width:42px;height:42px;border-radius:50%;background:rgba(8,14,19,.76);color:#dce6dc;border:1px solid rgba(255,255,255,.12)}.profile{display:flex;align-items:center;gap:12px}.profile-badge{width:46px;height:46px;border-radius:50%;border:2px solid rgba(255,255,255,.6)}.settings-menu{display:none;position:absolute;right:0;top:56px;width:280px;padding:16px;border-radius:18px;background:rgba(10,16,18,.98);border:1px solid rgba(83,255,98,.2)}.settings-menu.open{display:block}.settings-menu h4{margin:0 0 12px}.settings-menu .menu-btn{width:100%;margin-top:6px;padding:12px;border-radius:10px}.save-btn{background:linear-gradient(180deg,#6cff61,#48ef3d);color:#081108}.logout-btn{background:rgba(255,255,255,.08);color:#fff}.hub-banner{margin:22px auto;padding:16px 18px;border-radius:18px;background:rgba(11,19,15,.8);border:1px solid rgba(120,255,138,.18);display:flex;justify-content:space-between;align-items:center;gap:16px}.hub-score,.status-pill{padding:10px 14px;border-radius:14px;background:rgba(83,255,98,.1);border:1px solid rgba(83,255,98,.24)}.groups-label,.group-grid-title,.section-title{text-transform:uppercase;font-weight:900}.join-box .primary-btn{width:100%;margin-top:18px}.separator{width:min(100%,510px);margin:28px auto;height:1px;background:rgba(255,255,255,.18)}.group-create-form{display:none}.group-create-form.active{display:flex}.groups-grid{display:grid;gap:14px;width:min(100%,610px);margin:18px auto 0;padding:24px;border-radius:16px;background:rgba(146,173,157,.18);border:1px solid rgba(255,255,255,.16)}.group-tile{border:1px solid rgba(120,255,138,.42);border-radius:16px;padding:18px 20px;color:#fff;display:flex;justify-content:space-between;background:rgba(14,20,17,.82)}.dashboard{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:24px;padding-top:24px}.panel{background:rgba(16,22,31,.7);border:1px solid rgba(120,255,138,.1);border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.5);backdrop-filter:blur(12px);}.member-card{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:12px;border-radius:16px;background:rgba(255,255,255,.04)}.avatar{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:#183925;font-weight:900}.streak{color:#a1adb9;font-size:.84rem}.presence-dot,.chat-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:#53ff62}.battle-hud{display:flex;justify-content:center;gap:12px;margin-bottom:12px}.hud-chip{padding:10px 16px;border-radius:16px;border:1px solid rgba(83,255,98,.25);background:rgba(10,18,25,.66);text-transform:uppercase;font-size:.82rem;font-weight:800;color:#d9fede}.battery-scene{position:relative;height:680px;border-radius:32px;background:radial-gradient(circle at center,rgba(83,255,98,.1),rgba(0,0,0,0) 54%),linear-gradient(180deg,rgba(11,18,24,.7),rgba(8,13,19,.32));border:1px solid rgba(83,255,98,.08);overflow:hidden;box-shadow:0 0 40px rgba(83,255,98,0.05) inset,0 20px 50px rgba(0,0,0,0.6);}.scene-tag{position:absolute;left:24px;top:24px;padding:6px 10px;border-radius:999px;border:1px solid rgba(83,255,98,.16);background:rgba(7,12,16,.72);font-size:.7rem;text-transform:uppercase}.scene-note{position:absolute;right:24px;bottom:24px;max-width:220px;text-align:right;font-size:.78rem;color:#bdd7c4}.task-web{position:absolute;inset:0}.task-link{position:absolute;height:2px;background:linear-gradient(90deg,rgba(83,255,98,0),rgba(83,255,98,.78),rgba(83,255,98,0));transform-origin:left center;filter:drop-shadow(0 0 10px rgba(83,255,98,.58))}.task-node{position:absolute;width:144px;height:144px;border-radius:50%;border:2px solid rgba(130,255,154,.4);background:radial-gradient(circle at 35% 35%,rgba(207,255,214,.2),rgba(22,41,31,.94) 65%);color:#e8ffee;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:inherit;font-size:1rem;font-weight:900;text-transform:uppercase;cursor:pointer;box-shadow:0 0 20px rgba(83,255,98,0.1);transition:transform 0.2s,box-shadow 0.2s;}.task-node:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(83,255,98,0.3);}.task-node.completed{background:radial-gradient(circle at 35% 35%,rgba(220,255,193,.3),rgba(65,188,76,.84) 70%);color:#051106;box-shadow:0 0 25px rgba(83,255,98,0.4);}.task-node span{display:block;font-size:.7rem;opacity:.8;margin-top:6px}.battery-wrap{position:absolute;left:50%;top:64px;width:360px;height:560px;transform:translateX(-50%)}.battery-cap{position:absolute;top:0;left:50%;width:144px;height:40px;margin-left:-72px;border-radius:16px 16px 8px 8px;border:4px solid rgba(111,255,121,.9);background:linear-gradient(180deg,#afffa7,#54da5c)}.battery-body{position:absolute;left:50%;top:36px;width:300px;height:500px;margin-left:-150px;border-radius:34px 34px 76px 76px;border:6px solid rgba(111,255,121,.96);background:linear-gradient(180deg,#26332a 0%,#131e17 100%);overflow:hidden;box-shadow:0 0 50px rgba(83,255,98,0.15);}.battery-fill{position:absolute;left:18px;right:18px;bottom:18px;height:0%;border-radius:22px 22px 58px 58px;background:linear-gradient(180deg,#a8ff8f 0%,#60ff63 28%,#34d94b 66%,#249a3a 100%);transition:height .35s ease;box-shadow:0 -10px 30px rgba(83,255,98,0.5);}.battery-center-readout{position:absolute;left:50%;top:36px;width:300px;height:500px;margin-left:-150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;pointer-events:none}.battery-percent{font-size:4rem;font-weight:900;text-shadow:0 0 20px rgba(83,255,98,0.4);}.battery-subtext{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(220,255,223,.74)}.core-status{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);padding:8px 14px;border-radius:999px;background:rgba(8,15,11,.84);border:1px solid rgba(245,211,110,.22);font-size:.74rem;font-weight:900;text-transform:uppercase;color:#fff0c8}.online-row{display:flex;justify-content:space-between;gap:12px;margin-bottom:24px}.online-user{text-align:center;flex:1}.online-avatar-wrap{position:relative;width:68px;height:68px;margin:0 auto 10px}.online-avatar{width:68px;height:68px;border-radius:50%;border:3px solid rgba(255,255,255,.55)}.online-avatar-wrap::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#53ff62;border:2px solid #0a1016}.chat-entry{display:flex;gap:12px;margin-bottom:18px}.chat-avatar{width:42px;height:42px;border-radius:50%}.chat-input{margin-top:18px;display:flex;gap:12px}.send-btn{width:48px;height:48px;border-radius:14px;background:linear-gradient(180deg,#b2ffc0,#56ff68)}@media (max-width:1180px){.dashboard{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<section class="page auth-page active" id="loginPage"><div class="auth-wrap"><div class="auth-card"><h1 class="brand-title">CrewDo</h1><p class="brand-subtitle">Shared discipline. Visible momentum.</p><form class="auth-form" id="loginForm"><label for="loginName">Username</label><input id="loginName" type="text" placeholder="Email or Username" required><label for="loginPass">Password</label><input id="loginPass" type="password" placeholder="Password" required><button class="primary-btn" type="submit">Login</button></form><div class="auth-switch">don't have an account ? <button class="ghost-btn" type="button" data-target="signupPage">[sign up]</button></div></div></div></section>
+<section class="page auth-page" id="signupPage"><div class="auth-wrap"><div class="auth-card"><h1 class="brand-title">CrewDo</h1><p class="brand-subtitle">Create an account and enter your workspace.</p><form class="auth-form" id="signupForm"><label for="signupName">Username</label><input id="signupName" type="text" placeholder="Username" required><label for="signupEmail">Email</label><input id="signupEmail" type="email" placeholder="Email" required><label for="signupPass">Password</label><input id="signupPass" type="password" placeholder="Password" required><button class="primary-btn" type="submit">Sign Up</button></form><div class="auth-switch">already have an account ? <button class="ghost-btn" type="button" data-target="loginPage">[login]</button></div></div></div></section>
+<section class="page groups-page" id="groupsPage"><div class="groups-wrap"><div class="groups-top"><div class="brand-title" style="font-size:2rem; margin:0;">CrewDo</div><div class="topbar-actions"><button class="icon-btn" id="settingsToggleBtn" type="button">&#9881;</button><button class="icon-btn" type="button">?</button><div class="profile"><img class="profile-badge" id="groupsAvatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Liam" alt="User avatar"><span id="groupsProfileName">Liam</span></div><div class="settings-menu" id="settingsMenu"><h4>Account Settings</h4><input id="settingsName" type="text" placeholder="Account name"><button class="menu-btn save-btn" id="saveSettingsBtn" type="button">Save Changes</button><button class="menu-btn logout-btn" id="logoutBtn" type="button">Logout</button></div></div></div><div class="hub-banner"><div><div class="hub-title">Operations Hub</div><div class="hub-sub">Open a channel, enter a code, or create a private working room.</div></div><div class="hub-score" id="groupCountBadge">3 active rooms</div></div><div class="groups-panel"><p class="groups-label">Enter Team Code</p><form class="join-box" id="joinGroupForm"><div style="display:flex;gap:12px;"><input id="joinCodeInput" type="text" placeholder="Invite Code" required><input id="joinCodePassword" type="password" placeholder="Clan Password"></div><button class="primary-btn" type="submit" style="width:100%;margin-top:18px;">Join Group</button></form></div><div class="separator"></div><div class="groups-panel"><button class="secondary-btn" id="toggleCreateGroupBtn" type="button">Create Group</button><form class="group-create-form" id="createGroupForm"><input id="createGroupName" type="text" placeholder="Enter new clan name" required><input id="createGroupPassword" type="password" placeholder="Set clan password" required><textarea id="createGroupTasks" placeholder="Enter daily tasks (comma separated)\nE.g: Daily run, Focus Block" rows="3" required style="width:100%;padding:14px;border-radius:12px;background:rgba(28,31,34,.88);border:1px solid rgba(120,255,138,.22);color:#fff;resize:vertical;font-family:inherit;"></textarea><button class="primary-btn" type="submit">Deploy Clan</button></form></div><h2 class="group-grid-title">Your Groups</h2><div class="groups-grid" id="groupsGrid"></div></div></section>
+<section class="page dashboard-page" id="dashboardPage"><div class="app-shell"><header class="topbar"><div class="brand-title" style="font-size:2rem; margin:0;">CrewDo</div><div class="status-pill" id="groupBadge">Dashboard</div><div class="status-pill" id="clanStreakBadge" style="background:rgba(255,140,0,0.15);border-color:rgba(255,140,0,0.4);color:#ffc266;box-shadow:0 0 10px rgba(255,140,0,0.2);">🔥 0 Day Streak</div><div class="topbar-actions"><button class="icon-btn" id="dashboardSettingsToggleBtn" type="button">&#9881;</button><div class="profile"><img class="profile-badge" id="profileAvatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Liam" alt="User avatar"><span id="profileName">Liam</span></div><div class="settings-menu" id="dashboardSettingsMenu"><h4>Account Settings</h4><input id="dashboardSettingsName" type="text" placeholder="Account name"><button class="menu-btn save-btn" id="dashboardSaveSettingsBtn" type="button">Save Changes</button><button class="menu-btn logout-btn" id="dashboardLogoutBtn" type="button">Logout</button></div></div></header><div class="mission-strip"><div class="mission-card" style="display:inline-block; margin-right:12px"><div class="mission-label">Reserve</div><div class="mission-value" id="missionChargeValue">0%</div></div><div class="mission-card" style="display:inline-block; margin-right:12px"><div class="mission-label">Completed</div><div class="mission-value" id="missionTasksValue">0 / 0</div></div><div class="mission-card" style="display:inline-block;"><div class="mission-label">Condition</div><div class="mission-value hot" id="missionRankValue">Cold start</div></div></div><div style="margin-top:12px;"><button class="ghost-btn" id="backToGroupsBtn" type="button">&larr; Back to groups</button></div><main class="dashboard"><section><h2 class="section-title">Members List</h2><div class="panel" id="memberListContainer"></div></section><section><h2 class="section-title" style="text-align:center;">Daily Progress</h2><div class="battery-stage"><div class="battle-hud"><div class="hud-chip">The battery reflects completed work. Tasks are set by leadership.</div></div><div class="battery-scene"><div class="scene-tag">Core Chamber</div><div class="task-web" id="taskWebContainer"></div><div class="battery-wrap"><div class="battery-cap"></div><div class="battery-body"><div class="battery-fill" id="batteryFill"></div></div><div class="battery-center-readout"><div class="battery-percent" id="batteryPercent">0%</div><div class="battery-subtext">Core Energy</div></div><div class="core-status" id="comboBadge">Cold start</div></div><div class="scene-note">Every checked task restores the system and carries the room forward.</div></div><p class="reset-note" id="resetLabel">Each accomplishment feeds the core. The battery resets at midnight.</p></div></section><section><div class="panel"><h2 class="section-title">Online Users</h2><div class="online-row" id="onlineListContainer"></div></div><div class="panel" style="margin-top:24px;"><h2 class="section-title">Chat Room</h2><div id="chatFeed" style="max-height: 500px; overflow-y: auto;"></div><div class="chat-input"><input type="text" id="chatInput" placeholder="Type message..."><button class="send-btn" type="button" id="sendChatBtn">&#10148;</button></div></div></section></main></div></section>
+<!-- Pure Local Storage Application Engine -->
+<script>
+const APP_STORAGE_KEY='crewdo-app-state',TASK_STORAGE_KEY='crewdo-group-tasks',GLOBAL_GROUPS_KEY='crewdo-global-groups',CHAT_STORAGE_KEY='crewdo-chat-logs';
+const pages=document.querySelectorAll('.page'),groupsGrid=document.getElementById('groupsGrid'),createGroupForm=document.getElementById('createGroupForm'),toggleCreateGroupBtn=document.getElementById('toggleCreateGroupBtn'),joinCodeInput=document.getElementById('joinCodeInput'),joinCodePassword=document.getElementById('joinCodePassword'),groupBadge=document.getElementById('groupBadge'),clanStreakBadge=document.getElementById('clanStreakBadge'),profileName=document.getElementById('profileName'),profileAvatar=document.getElementById('profileAvatar'),groupsProfileName=document.getElementById('groupsProfileName'),groupsAvatar=document.getElementById('groupsAvatar'),batteryFill=document.getElementById('batteryFill'),batteryPercent=document.getElementById('batteryPercent'),resetLabel=document.getElementById('resetLabel'),settingsMenu=document.getElementById('settingsMenu'),settingsName=document.getElementById('settingsName'),dashboardSettingsMenu=document.getElementById('dashboardSettingsMenu'),dashboardSettingsName=document.getElementById('dashboardSettingsName'),groupCountBadge=document.getElementById('groupCountBadge'),missionChargeValue=document.getElementById('missionChargeValue'),missionTasksValue=document.getElementById('missionTasksValue'),missionRankValue=document.getElementById('missionRankValue'),comboBadge=document.getElementById('comboBadge'),memberListContainer=document.getElementById('memberListContainer'),onlineListContainer=document.getElementById('onlineListContainer'),chatFeed=document.getElementById('chatFeed'),chatInput=document.getElementById('chatInput'),taskWebContainer=document.getElementById('taskWebContainer');
+
+function avatarUrl(seed){return`https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(seed)}`;}
+function slugify(value){return value.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+function getTodayKey(){const now=new Date();return`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;}
+
+function getGlobalGroups() {
+    let gg = JSON.parse(localStorage.getItem(GLOBAL_GROUPS_KEY));
+    if(!gg){ gg = {}; localStorage.setItem(GLOBAL_GROUPS_KEY, JSON.stringify(gg)); }
+    return gg;
+}
+function saveGlobalGroups(gg){ localStorage.setItem(GLOBAL_GROUPS_KEY, JSON.stringify(gg)); }
+
+function getChatLogs() {
+    let cl = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY));
+    if(!cl){ cl = {}; localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(cl)); }
+    return cl;
+}
+function saveChatLogs(cl){ localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(cl)); }
+
+function getDefaultState(){return{user:{name:'',avatar:avatarUrl('User'),avatarSeed:'User',loggedIn:false},joinedGroups:[],selectedGroupId:null};}
+function loadAppState(){const saved=JSON.parse(localStorage.getItem(APP_STORAGE_KEY)||'null'),base=getDefaultState();if(!saved)return base;return{...base,...saved,user:{...base.user,...(saved.user||{})},joinedGroups:Array.isArray(saved.joinedGroups)?saved.joinedGroups:[]};}
+function saveAppState(state){localStorage.setItem(APP_STORAGE_KEY,JSON.stringify(state));}
+let appState=loadAppState();
+
+function getTaskStore(){return JSON.parse(localStorage.getItem(TASK_STORAGE_KEY)||'{}');}
+function saveTaskStore(store){localStorage.setItem(TASK_STORAGE_KEY,JSON.stringify(store));}
+
+// Real-Time Cross-Tab Sync via LocalStorage Event
+window.addEventListener('storage', (e) => {
+    if (e.key === GLOBAL_GROUPS_KEY || e.key === TASK_STORAGE_KEY || e.key === CHAT_STORAGE_KEY) {
+        if(appState.user.loggedIn && appState.selectedGroupId) {
+            appState.joinedGroups = appState.joinedGroups.map(myGroup => {
+                const refreshed = getGlobalGroups()[myGroup.id];
+                return refreshed ? refreshed : myGroup;
+            });
+            renderMembers();
+            renderOnlineUsers();
+            renderTasks();
+            renderChatSeed(); // Re-render chat entirely to reflect messages sent by other tabs
+        }
+    }
+});
+
+function getCurrentGroupId(){return appState.selectedGroupId;}
+function getGroupById(groupId){return appState.joinedGroups.find(group=>group.id===groupId)||(appState.joinedGroups.length?appState.joinedGroups[0]:null);}
+function getCurrentTaskState(){
+    const store=getTaskStore(),groupId=getCurrentGroupId(),today=getTodayKey();
+    const group=getGroupById(groupId);
+    if(!groupId || !group) return {date:today,items:[]};
+    if(!store[groupId]) {
+        store[groupId]={date:today,items:(group.tasks||['Focus Session']).map((t,i)=>({id:`task-${i}`,text:t,completed:false}))};
+    }
+    if(store[groupId].date!==today) {
+        store[groupId]={date:today,items:(store[groupId].items||(group.tasks||['Focus Session']).map((t,i)=>({id:`task-${i}`,text:t,completed:false}))).map(task=>({...task,completed:false}))};
+    }
+    saveTaskStore(store);return store[groupId];
+}
+function getCurrentTasks(){return getCurrentTaskState().items||[];}
+function saveCurrentTasks(items){const store=getTaskStore(),gid=getCurrentGroupId();if(gid) {store[gid]={date:getTodayKey(),items};saveTaskStore(store);}}
+function showPage(pageId){pages.forEach(page=>page.classList.toggle('active',page.id===pageId));}
+function getCoreState(percent){if(percent>=80)return'Pressurized';if(percent>=50)return'Sustained';if(percent>=20)return'Recovering';return'Cold start';}
+function renderGroups(){groupsGrid.innerHTML='';const count=appState.joinedGroups.length;groupCountBadge.textContent=`${count} active room${count===1?'':'s'}`;appState.joinedGroups.forEach(group=>{const button=document.createElement('button');button.type='button';button.className='group-tile';button.innerHTML=`<div class="group-tile-name">${group.name}</div><div class="group-tile-meta">Code: ${group.code}</div>`;button.addEventListener('click',()=>openGroup(group.id));groupsGrid.appendChild(button);});}
+
+function renderDashboardHeader(){
+    const group=getGroupById(getCurrentGroupId());
+    groupBadge.textContent=group?group.name:'CrewDo';
+    clanStreakBadge.textContent=`🔥 ${group?.streak||0} Day Streak`;
+    profileName.textContent=appState.user.name||'User';
+    profileAvatar.src=appState.user.avatar||avatarUrl(appState.user.avatarSeed||'User');
+    groupsProfileName.textContent=appState.user.name||'User';
+    groupsAvatar.src=appState.user.avatar||avatarUrl(appState.user.avatarSeed||'User');
+    settingsName.value=appState.user.name||'';
+    if(dashboardSettingsName){ dashboardSettingsName.value=appState.user.name||''; }
+}
+
+function renderMembers(){
+    memberListContainer.innerHTML='';
+    const gg = getGlobalGroups(), group = gg[getCurrentGroupId()];
+    const membersList = group && group.members.length ? group.members : [appState.user.name||'User'];
+    membersList.forEach((member,index)=>{
+        const warm=index===0||index===1?' warm-dot':'';
+        const card=document.createElement('div');card.className='member-card';
+        card.innerHTML=`<div class="avatar">${member.charAt(0).toUpperCase()}</div><div class="member-meta"><div class="member-name"><span class="presence-dot${warm}"></span>${member}</div><div class="streak">Active in session</div></div>`;
+        memberListContainer.appendChild(card);
+    });
+}
+
+function renderOnlineUsers(){
+    onlineListContainer.innerHTML='';
+    const gg = getGlobalGroups(), group = gg[getCurrentGroupId()];
+    const membersList = group && group.members.length ? group.members : [appState.user.name||'User'];
+    membersList.slice(0,4).forEach(member=>{
+        const user=document.createElement('div');user.className='online-user';
+        user.innerHTML=`<div class="online-avatar-wrap"><img class="online-avatar" src="${avatarUrl(member)}" alt="${member}"></div><div>${member.split('_')[0].split(' ')[0]}</div>`;
+        onlineListContainer.appendChild(user);
+    });
+}
+
+function renderChatSeed(){
+    const groupId = getCurrentGroupId();
+    const allLogs = getChatLogs();
+    const groupChat = allLogs[groupId] || [];
+    chatFeed.innerHTML='';
+    groupChat.forEach(msg => {
+        const entry=document.createElement('div');
+        entry.className='chat-entry';
+        const isMe = msg.sender === appState.user.name;
+        entry.innerHTML=`<img class="chat-avatar" src="${avatarUrl(msg.sender)}" alt="${msg.sender}"><div class="chat-text"><span class="chat-name">${msg.sender}${isMe?' (You)':''}</span> <span class="chat-dot"></span><br>${msg.content}</div>`;
+        chatFeed.appendChild(entry);
+    });
+    chatFeed.scrollTop=chatFeed.scrollHeight;
+}
+
+function renderBattery(){const tasks=getCurrentTasks(),cleared=tasks.filter(task=>task.completed).length,percent=tasks.length ? Math.min(Math.round((cleared/tasks.length)*100),100) : 0;batteryFill.style.height=percent+'%';batteryPercent.textContent=percent+'%';missionChargeValue.textContent=`${percent}%`;missionTasksValue.textContent=`${cleared} / ${tasks.length}`;missionRankValue.textContent=getCoreState(percent);comboBadge.textContent=getCoreState(percent);resetLabel.textContent=`Resets at midnight | ${100-percent}% remaining today`;}
+function toggleTask(taskId){saveCurrentTasks(getCurrentTasks().map(task=>task.id===taskId?{...task,completed:!task.completed}:task));renderTasks();}
+
+function renderTasks(){
+    const tasks=getCurrentTasks();taskWebContainer.innerHTML='';
+    tasks.forEach((task,index)=>{
+        const centerX=360,centerY=340,buttonRadius=72;
+        const angle=(-Math.PI/2)+(index*(137.5*Math.PI/180));
+        const radius=280+(index%4)*45;
+        const bubbleX=centerX+Math.cos(angle)*radius,bubbleY=centerY+Math.sin(angle)*radius;
+        const dx=centerX-bubbleX,dy=centerY-bubbleY;
+        const distance=Math.sqrt(dx*dx+dy*dy),lineAngle=Math.atan2(dy,dx)*(180/Math.PI);
+        const link=document.createElement('div');link.className='task-link';
+        link.style.left=bubbleX+'px';link.style.top=bubbleY+'px';link.style.width=distance+'px';link.style.transform=`rotate(${lineAngle}deg)`;
+        if(task.completed)link.style.background='linear-gradient(90deg, rgba(83,255,98,0), rgba(83,255,98,1), rgba(83,255,98,0))';
+        const button=document.createElement('button');button.type='button';button.className=`task-node${task.completed?' completed':''}`;
+        button.style.left=(bubbleX-buttonRadius)+'px';button.style.top=(bubbleY-buttonRadius)+'px';
+        button.innerHTML=`${task.text}<span class="task-reward">core power</span>`;
+        button.addEventListener('click',()=>toggleTask(task.id));
+        taskWebContainer.appendChild(link);taskWebContainer.appendChild(button);
+    });
+    renderBattery();
+}
+
+function openGroup(groupId){appState.selectedGroupId=groupId;saveAppState(appState);renderDashboardHeader();renderMembers();renderOnlineUsers();renderTasks();renderChatSeed();showPage('dashboardPage');}
+
+async function createGroup(groupName, pass, tasksArray){
+  const trimmed=groupName.trim();if(!trimmed)return;
+  const newGroup = { id: `${slugify(trimmed)}-${Date.now()}`, name: trimmed, code: `${slugify(trimmed).toUpperCase().slice(0,6)}${Math.floor(100+Math.random()*900)}`, members: [appState.user.name], tasks: tasksArray.length>0?tasksArray:['Focus Session'], pass: pass, streak: 1 };
+  const gg = getGlobalGroups(); gg[newGroup.id] = newGroup; saveGlobalGroups(gg);
+  appState.joinedGroups.unshift(newGroup);
+  appState.selectedGroupId=appState.joinedGroups[0].id; saveAppState(appState); renderGroups();
+  createGroupForm.reset(); createGroupForm.classList.remove('active'); openGroup(appState.selectedGroupId);
+}
+
+async function joinGroupByCode(code, pass){
+  const trimmed=code.trim().toUpperCase();if(!trimmed)return;
+  const gg = getGlobalGroups();
+  let target = Object.values(gg).find(g => g.code === trimmed);
+  if(!target) { alert(`No group found with code: ${trimmed}`); return; }
+  if(target.pass && target.pass !== pass) { alert("Incorrect group password"); return; }
+  if (!target.members.includes(appState.user.name)) target.members.push(appState.user.name);
+  gg[target.id] = target; saveGlobalGroups(gg);
+  if(!appState.joinedGroups.some(group=>group.id===target.id)) appState.joinedGroups.unshift(target);
+  appState.selectedGroupId = target.id;
+  saveAppState(appState); document.getElementById('joinGroupForm').reset(); renderGroups(); openGroup(appState.selectedGroupId);
+}
+
+function saveAccountSettings(nameValue,menu){const name=nameValue.trim()||'User';appState.user={...appState.user,name,avatarSeed:name,avatar:avatarUrl(name)};saveAppState(appState);renderDashboardHeader();renderMembers();renderOnlineUsers();menu.classList.remove('open');}
+function logoutUser(menu){appState.user={...appState.user,loggedIn:false}; appState.joinedGroups=[]; appState.selectedGroupId=null; saveAppState(appState); menu.classList.remove('open');showPage('loginPage');}
+document.querySelectorAll('[data-target]').forEach(button=>button.addEventListener('click',()=>showPage(button.dataset.target)));
+
+function finalizeLogin(userName) {
+  const gg = getGlobalGroups();
+  const userGroups = Object.values(gg).filter(g => g.members.includes(userName));
+  appState.user={...appState.user,name: userName, loggedIn:true, avatarSeed:userName, avatar:avatarUrl(userName)};
+  appState.joinedGroups = userGroups;
+  appState.selectedGroupId = userGroups.length ? userGroups[0].id : null;
+  saveAppState(appState);
+  renderGroups(); renderDashboardHeader(); showPage('groupsPage');
+}
+
+document.getElementById('loginForm').addEventListener('submit', event=>{
+  event.preventDefault(); const name=document.getElementById('loginName').value.trim();
+  finalizeLogin(name);
+});
+document.getElementById('signupForm').addEventListener('submit', event=>{
+  event.preventDefault(); const name=document.getElementById('signupName').value.trim();
+  finalizeLogin(name);
+});
+
+toggleCreateGroupBtn.addEventListener('click',()=>createGroupForm.classList.toggle('active'));
+createGroupForm.addEventListener('submit',event=>{
+  event.preventDefault();
+  const tasksValue = document.getElementById('createGroupTasks').value.split(',').map(t=>t.trim()).filter(Boolean);
+  createGroup(document.getElementById('createGroupName').value, document.getElementById('createGroupPassword').value, tasksValue);
+});
+document.getElementById('joinGroupForm').addEventListener('submit',async (event)=>{event.preventDefault();joinGroupByCode(document.getElementById('joinCodeInput').value, document.getElementById('joinCodePassword').value);});
+document.getElementById('backToGroupsBtn').addEventListener('click',()=>{renderGroups();showPage('groupsPage');});
+document.getElementById('settingsToggleBtn').addEventListener('click',()=>settingsMenu.classList.toggle('open'));
+if(document.getElementById('dashboardSettingsToggleBtn')) {
+    document.getElementById('dashboardSettingsToggleBtn').addEventListener('click',()=>dashboardSettingsMenu.classList.toggle('open'));
+    document.getElementById('dashboardSaveSettingsBtn').addEventListener('click',()=>saveAccountSettings(dashboardSettingsName.value,dashboardSettingsMenu));
+    document.getElementById('dashboardLogoutBtn').addEventListener('click',()=>logoutUser(dashboardSettingsMenu));
+}
+document.getElementById('saveSettingsBtn').addEventListener('click',()=>saveAccountSettings(settingsName.value,settingsMenu));
+document.getElementById('logoutBtn').addEventListener('click',()=>logoutUser(settingsMenu));
+
+document.getElementById('sendChatBtn').addEventListener('click',()=>{
+  const text=chatInput.value.trim();if(!text)return;
+  const groupId = getCurrentGroupId();
+  if(!groupId) return;
+  const allLogs = getChatLogs();
+  if(!allLogs[groupId]) allLogs[groupId] = [];
+  const msgObj = { sender: appState.user.name, content: text, timestamp: Date.now() };
+  allLogs[groupId].push(msgObj);
+  saveChatLogs(allLogs);
+  renderChatSeed();
+  chatInput.value='';
+});
+
+renderGroups();renderDashboardHeader();renderMembers();renderOnlineUsers();renderChatSeed();renderTasks();
+showPage(appState.user.loggedIn?'groupsPage':'loginPage');
+</script>
+</body>
 </html>

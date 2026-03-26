@@ -1,22 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './context/AuthContext'
-import Login from './pages/Login'
-import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import ClanPage from './pages/ClanPage'
-
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth()
-  if (loading) return <SplashScreen />
-  return user ? children : <Navigate to="/login" replace />
-}
-
-const PublicRoute = ({ children }) => {
-  const { user, loading } = useAuth()
-  if (loading) return <SplashScreen />
-  return !user ? children : <Navigate to="/dashboard" replace />
-}
 
 const SplashScreen = () => (
   <div className="min-h-screen flex items-center justify-center bg-bg-dark">
@@ -45,10 +31,10 @@ export default function App() {
         />
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-          <Route path="/clan/:id" element={<PrivateRoute><ClanPage /></PrivateRoute>} />
+          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/register" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/clan/:id" element={<ClanPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
